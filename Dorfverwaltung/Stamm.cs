@@ -6,18 +6,20 @@ namespace Dorfverwaltung
     public class Stamm
     {
         public string Name { get; set; }
+        public string Species { get; set; }
         public int GruendungNdK { get; set; }
         public string Stammeshaupt { get; set; }
         public int StammeshauptSeit { get; set; }
-        public List<Zwerg> Mitglieder { get; set; }
+        public List<Lebewesen> Mitglieder { get; set; }
 
-        public Stamm(string name, int gruendung, string stammeshaupt, int stammmeshautpseit, List<Zwerg> zwerge)
+        public Stamm(string name, string species, int gruendung, string stammeshaupt, int stammmeshautpseit, List<Lebewesen> mitglieder)
         {
             Name = name;
+            Species = species;
             GruendungNdK = gruendung;
             Stammeshaupt = stammeshaupt;
             StammeshauptSeit = stammmeshautpseit;
-            Mitglieder = zwerge;
+            Mitglieder = mitglieder;
         }
         public static int SummeDesMachtfaktors(Stamm stamm)
         {
@@ -28,14 +30,14 @@ namespace Dorfverwaltung
             }
             return machtFaktor;
         }
-        public void AddZwerg(Stamm stamm, Zwerg zwerg)
+        public void AddBewohner(Stamm stamm, Lebewesen Bewohner)
         {
-            stamm.Mitglieder.Add(zwerg);
+            stamm.Mitglieder.Add(Bewohner);
             SummeDesMachtfaktors(stamm);
         }
-        public void RemoveZwerg(Stamm stamm, Zwerg zwerg)
+        public void RemoveBewohner(Stamm stamm, Lebewesen Bewohner)
         {
-            stamm.Mitglieder.Remove(zwerg);
+            stamm.Mitglieder.Remove(Bewohner);
             SummeDesMachtfaktors(stamm);
         }
     }

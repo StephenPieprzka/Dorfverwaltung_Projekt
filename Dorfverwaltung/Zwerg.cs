@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 
 namespace Dorfverwaltung
 {
-    public class Zwerg
+    public class Zwerg : Lebewesen
     {
-        string Name { get; set; }
-        int Alter { get; set; }
-        string Stamm { get; set; }
-        public int Machtfaktor { get; set; }
-
         public List<Gegenstand> Inventar = new List<Gegenstand>();
-
+        public Zwerg()
+        {
+            Name = "Max MusterZwerg";
+            Spezies = "Zwerg";
+            Alter = 0;
+            Stamm = "";
+            Machtfaktor = 0;
+        }
         public Zwerg(string name, int alter, string stamm, int machtfaktor)
         {
             Name = name;
+            Spezies = "Zwerg";
             Alter = alter;
             Stamm = stamm;
             Machtfaktor = machtfaktor;
