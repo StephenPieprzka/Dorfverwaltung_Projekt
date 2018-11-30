@@ -1,0 +1,7 @@
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\bin\Debug\Dorfverwaltung.exe.config
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\bin\Debug\Dorfverwaltung.exe
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\bin\Debug\Dorfverwaltung.pdb
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\obj\Debug\Dorfverwaltung.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\obj\Debug\Dorfverwaltung.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\obj\Debug\Dorfverwaltung.exe
+C:\Users\user\Documents\Visual Studio 2017\Projects\Dorfverwaltung\Dorfverwaltung\obj\Debug\Dorfverwaltung.pdb
