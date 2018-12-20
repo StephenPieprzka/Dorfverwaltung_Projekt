@@ -66,12 +66,12 @@ namespace Dorfverwaltung
 
         static void RunProgramm()
         {
-            int steuersatz = 2;
+            int steuersatz;
             try
             {
                 while (running)
                 {
-                    Console.Clear();
+                    steuersatz = SteuerBasisSatz;
                     //Auswahl dem Nutzer überlassen
                     Console.WriteLine("###  Bitte wählen Sie eine Aktion    ###");
                     Console.WriteLine("###      1: Staemme anzeigen         ###");
@@ -88,6 +88,7 @@ namespace Dorfverwaltung
                         case 3: Console.Clear(); ShowCitizen(); break;
                         case 4: Console.Clear(); EditCitizen(); break;
                         case 5: Console.Clear(); EditInventory(); break;
+                        case 6: Console.Clear(); EditTaxation(); break;
                         case 9: running = false; break;
                         case 42: Console.WriteLine("Das ist hier nicht die Antwort!"); break;
                         default: Console.Clear(); ShowAllClans(); break;
@@ -122,7 +123,7 @@ namespace Dorfverwaltung
                 }
                 else
                     Console.Write("unbekannter Stammesfuehrer");
-                Console.WriteLine("\n Besteuerung: " + (MachtDesClans * 2125));
+                Console.WriteLine("\n Besteuerung: " + (MachtDesClans * SteuerBasisSatz));
             }
             //Schauen wir mal, ob der Benutzer fertig ist, oder noch etwas erledigen möchte.
             ResetProgram();
@@ -252,7 +253,7 @@ namespace Dorfverwaltung
                 else
                     Console.Write("Mitglied von " + stammesfuehrervon);
                 //Für den König besonder interessant: wie viel Steuern zahlt der Bewohner potentiell?
-                Console.Write("\n Besteuerung: " + (MachtDesBewohners * 2125) + "\n");
+                Console.Write("\n Besteuerung: " + (MachtDesBewohners * SteuerBasisSatz) + "\n");
 
                 if (bewohner.Spezies.Equals("Zwerg"))
                 {
@@ -264,7 +265,7 @@ namespace Dorfverwaltung
                 }
                 else if (bewohner.Spezies.Equals("Elb"))
                 {
-                    Console.WriteLine("Elben haben nur ihre Haare als Waffe.");
+                    Console.Write("Elben haben nur ihre Haare als Waffe.");
                 }
                 Console.Write("\n");
                 Console.WriteLine("");
@@ -414,7 +415,7 @@ namespace Dorfverwaltung
                 else if (bewohner.Spezies.Equals("Elb"))
                 {
                     Elb elb = (Elb)bewohner;
-                    Console.WriteLine("Elben haben nur ihre Haare als Waffe. Länge: " + elb.Haarlaenge);
+                    Console.Write("Elben haben nur ihre Haare als Waffe. Länge: " + elb.Haarlaenge);
                 }
                 Console.Write("\n");
             }
@@ -503,6 +504,37 @@ namespace Dorfverwaltung
 
             ResetProgram();
         }
+        static void EditTaxation()
+        {
+            Console.WriteLine("###      6: Besteuerung editieren    ###");
+            Console.Write("Momentane Besteuerung: " + SteuerBasisSatz + ". Möchten Sie den Steuersatz anpassen? [J/n]");
+            switch (Console.ReadLine())
+            {
+                case "J": EditSteuerBasisSatz(); break;
+                case "j": EditSteuerBasisSatz(); break;
+                case "N": return;
+                case "n": return;
+                default: EditSteuerBasisSatz(); break;
+            }
+        }
+
+        static void EditSteuerBasisSatz()
+        {
+            Console.Write("Bitte geben Sie den neuen Steuerbasissatz an:");
+            try
+            {
+                SteuerBasisSatz = Int32.Parse(Console.ReadLine());
+                Console.Write("Der Basissteuersatz wurde geändert.");
+                ResetProgram();
+            }
+            catch (Exception)
+            {
+                Console.Write("Bitte geben Sie den Steuerbasissatz als Integer [0..999] an:");
+                EditSteuerBasisSatz();
+            }
+            
+        }
+
         static void Init()
         {
             SteuerBasisSatz = 2;
@@ -563,7 +595,7 @@ namespace Dorfverwaltung
                 Console.WriteLine("Ungültige Eingabe!");
                 ResetProgram();
             }
-
+            Console.Clear();
 
         }
         //Endlich fertig...
