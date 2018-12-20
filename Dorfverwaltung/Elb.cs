@@ -52,7 +52,7 @@ namespace Dorfverwaltung
         public static void UpdateMachtfaktor(Elb elb)
         {
             int newMachtfaktor = 0;
-            newMachtfaktor = (int)(elb.Haarlaenge * Program.SteuerBasisSatz);
+            newMachtfaktor = (int)((elb.Alter / Program.SteuerBasisSatz) + elb.Haarlaenge);
             elb.Machtfaktor = newMachtfaktor;
         }
     }

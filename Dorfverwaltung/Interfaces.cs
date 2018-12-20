@@ -56,13 +56,13 @@ namespace Dorfverwaltung
         /// Return all inhabitants.
         /// </summary>
         /// <returns>The inhabitants.</returns>
-        List<IInhabitant> AllInhabitants();
+        List<Lebewesen> AllInhabitants();
 
         /// <summary>
         /// Return all dukes.
         /// </summary>
         /// <returns>The dukes.</returns>
-        List<IDuke> AllDukes();
+        List<Lebewesen> AllDukes();
 
     }
 }

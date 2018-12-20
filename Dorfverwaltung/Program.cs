@@ -4,8 +4,28 @@ using System.Linq;
 
 namespace Dorfverwaltung
 {
-    class Program
+    class Program : IManagement
     {
+        public int TotalTax() {
+            int alleSteuern = 0;
+            foreach (var Stamm in AlleClans)
+            {
+                alleSteuern += Stamm.Tax;
+            }
+            return alleSteuern;
+        }
+        public float BaseTax { get; set; }
+        public List<Lebewesen> AllInhabitants()
+        {
+            return AlleBewohner;
+        }
+        public List<Lebewesen> AllDukes() {
+            List<Lebewesen> allDukes = new List<Lebewesen>();
+            foreach (var Stamm in AlleClans)
+                allDukes.Add(AlleBewohner.Find(f => f.Name == Stamm.Stammeshaupt));
+            return allDukes;
+        }
+
         public static int SteuerBasisSatz = 2;
         //Initialisieren der Bewohnere und Clans
         static List<Lebewesen> AlleBewohner = new List<Lebewesen>();
@@ -26,7 +46,7 @@ namespace Dorfverwaltung
         static Elb Malon = new Elb("Malon", 592, "Montzieu", 0, false, 145.0f);
 
 
-        //Bewohnere fühlen sich ohne Waffen immer "nackt". Initialisieren wir also Waffen, damit die Bewohnere diese nutzen können.
+        //Bewohner fühlen sich ohne Waffen immer "nackt". Initialisieren wir also Waffen, damit die Bewohner diese nutzen können.
         static Gegenstand Axt01 = new Gegenstand("Axt", 12);
         static Gegenstand Schwert = new Gegenstand("Schwert", 15);
         static Gegenstand Axt02 = new Gegenstand("Axt", 17);
@@ -40,7 +60,7 @@ namespace Dorfverwaltung
         {
             Init();
             //Beginn der Benutzerinteraktion
-            Console.WriteLine("#    Willkommen zur Dorfverwaltung.    #");
+            Console.WriteLine("#    Willkommen zur Königreichverwaltung.    #");
             RunProgramm();
         }
 
@@ -51,6 +71,7 @@ namespace Dorfverwaltung
             {
                 while (running)
                 {
+                    Console.Clear();
                     //Auswahl dem Nutzer überlassen
                     Console.WriteLine("###  Bitte wählen Sie eine Aktion    ###");
                     Console.WriteLine("###      1: Staemme anzeigen         ###");
@@ -63,14 +84,15 @@ namespace Dorfverwaltung
                     //Aufruf der passenden Methode basierend auf Nutzerinput
                     switch (Int32.Parse(Console.ReadLine()))
                     {
-                        case 2: EditAClan(); break;
-                        case 3: ShowCitizen(); break;
-                        case 4: EditCitizen(); break;
-                        case 5: EditInventory(); break;
+                        case 2: Console.Clear(); EditAClan(); break;
+                        case 3: Console.Clear(); ShowCitizen(); break;
+                        case 4: Console.Clear(); EditCitizen(); break;
+                        case 5: Console.Clear(); EditInventory(); break;
                         case 9: running = false; break;
                         case 42: Console.WriteLine("Das ist hier nicht die Antwort!"); break;
-                        default: ShowAllClans(); break;
+                        default: Console.Clear(); ShowAllClans(); break;
                     }
+                    
                 }
             }
             catch (Exception)
@@ -412,7 +434,7 @@ namespace Dorfverwaltung
             }
             //Bewohner Veriable - das andere geht zwar auch jedesmal, ist aber mehr schreibarbeit
             if (AlleBewohner[currentBewohner].Spezies.Equals("Zwerg"))
-                {
+            {
                 Zwerg bewohnerToEdit = (Zwerg)AlleBewohner[currentBewohner];
                 Console.Clear();
                 //Alle Inventarelemente darstellen
@@ -493,6 +515,10 @@ namespace Dorfverwaltung
             Zwingli.Inventar.Add(Zauberstab);
             Zwingli.Inventar.Add(Streithammer);
             Zwerg.UpdateMachtfaktor(Zwingli);
+            Elb.UpdateMachtfaktor(Elidyr);
+            Elb.UpdateMachtfaktor(Iefyr);
+            Elb.UpdateMachtfaktor(Vulas);
+            Elb.UpdateMachtfaktor(Malon);
 
             //Bewohnere sind keine Einzelkämpfer
             Altobarden.Mitglieder.Add(Gimli);
@@ -506,10 +532,16 @@ namespace Dorfverwaltung
             //Hinzufügen der Stämme zu einer Liste
             AlleClans.Add(Altobarden);
             AlleClans.Add(Elbkbnechte);
+            AlleClans.Add(Murkpeak);
+            AlleClans.Add(Montzieu);
             //Hinzufügen der Bewohnere zu einer Liste
             AlleBewohner.Add(Gimli);
             AlleBewohner.Add(Gumli);
             AlleBewohner.Add(Zwingli);
+            AlleBewohner.Add(Elidyr);
+            AlleBewohner.Add(Iefyr);
+            AlleBewohner.Add(Vulas);
+            AlleBewohner.Add(Malon);
         }
 
         //Methode, um das Programm zu beenden oder fortzufuehren

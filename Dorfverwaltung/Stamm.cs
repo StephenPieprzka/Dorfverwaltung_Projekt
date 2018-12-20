@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Dorfverwaltung
 {
-    public class Stamm
+    public class Stamm : IDuke
     {
         public string Name { get; set; }
         public string Species { get; set; }
         public int GruendungNdK { get; set; }
         public string Stammeshaupt { get; set; }
         public int StammeshauptSeit { get; set; }
+        public int LeaderSince => StammeshauptSeit;
+        public int Tax => SummeDesMachtfaktors(this);
         public List<Lebewesen> Mitglieder { get; set; }
 
         public Stamm(string name, string species, int gruendung, string stammeshaupt, int stammmeshautpseit, List<Lebewesen> mitglieder)
