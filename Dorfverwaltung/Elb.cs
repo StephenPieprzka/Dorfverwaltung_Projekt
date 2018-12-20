@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Dorfverwaltung
 {
-    public class Elb : Lebewesen
+    public class Elb : Lebewesen, IInhabitant
     {
         public float Haarlaenge = 0;
+        public int Tax
+        {
+            get => (int)((Alter / Program.SteuerBasisSatz) + Haarlaenge);
+        }
         public List<Gegenstand> Inventar = new List<Gegenstand>();
         public Elb()
         {

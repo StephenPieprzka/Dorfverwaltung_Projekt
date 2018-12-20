@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Dorfverwaltung
 {
-    public class Zwerg : Lebewesen
+    public class Zwerg : Lebewesen,IInhabitant
     {
+        public int Tax
+        {
+            get => Machtfaktor * Program.SteuerBasisSatz;
+        }
         public List<Gegenstand> Inventar = new List<Gegenstand>();
         public Zwerg()
         {

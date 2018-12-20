@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//Zeile 126 : SteuerAusgabe ala
+/*
+ * Im Menü möchte Sie dann die Optionen haben, für die Gesamtsteuer, Steuer pro Einwohner, Steuer pro Häuptling und die Optionen zur Veränderung des Basissteuersatz.
+ * 
+ */
+
+
 namespace Dorfverwaltung
 {
     class Program : IManagement
     {
-        public int TotalTax() {
+        public int TotalTax()
+        {
             int alleSteuern = 0;
             foreach (var Stamm in AlleClans)
             {
@@ -19,7 +27,8 @@ namespace Dorfverwaltung
         {
             return AlleBewohner;
         }
-        public List<Lebewesen> AllDukes() {
+        public List<Lebewesen> AllDukes()
+        {
             List<Lebewesen> allDukes = new List<Lebewesen>();
             foreach (var Stamm in AlleClans)
                 allDukes.Add(AlleBewohner.Find(f => f.Name == Stamm.Stammeshaupt));
@@ -74,6 +83,7 @@ namespace Dorfverwaltung
                     steuersatz = SteuerBasisSatz;
                     //Auswahl dem Nutzer überlassen
                     Console.WriteLine("###  Bitte wählen Sie eine Aktion    ###");
+                    Console.WriteLine("###      0: Übersichtsanzeige        ###");
                     Console.WriteLine("###      1: Staemme anzeigen         ###");
                     Console.WriteLine("###      2: Staemme editieren        ###");
                     Console.WriteLine("###      3: Bewohner anzeigen        ###");
@@ -84,6 +94,7 @@ namespace Dorfverwaltung
                     //Aufruf der passenden Methode basierend auf Nutzerinput
                     switch (Int32.Parse(Console.ReadLine()))
                     {
+                        case 0: Console.Clear(); ShowOverView(); break;
                         case 2: Console.Clear(); EditAClan(); break;
                         case 3: Console.Clear(); ShowCitizen(); break;
                         case 4: Console.Clear(); EditCitizen(); break;
@@ -93,7 +104,7 @@ namespace Dorfverwaltung
                         case 42: Console.WriteLine("Das ist hier nicht die Antwort!"); break;
                         default: Console.Clear(); ShowAllClans(); break;
                     }
-                    
+
                 }
             }
             catch (Exception)
@@ -103,6 +114,31 @@ namespace Dorfverwaltung
             }
 
 
+        }
+        static void ShowOverView()
+        {
+            int gesamtsteuerSatz = 0;
+            foreach (var Stamm in AlleClans)
+            {
+                gesamtsteuerSatz += Stamm.Tax;
+            }
+            Console.WriteLine("Gesamtsteuereinnahmen: " + gesamtsteuerSatz + ".");
+            Console.WriteLine("Steuereinnahmen nach Einwohner:");
+            int _anzahlBewohner = 0;
+            foreach (var Einwohner in AlleBewohner)
+            {
+                _anzahlBewohner += 1;
+                if (Einwohner.Machtfaktor > 0)
+                {
+                    
+                }
+                gesamtsteuerSatz += Einwohner.Machtfaktor * SteuerBasisSatz;
+                else
+                {
+                    Elb Bewohner = (Elb)Einwohner;
+                    gesamtsteuerSatz += (int)(Einwohner.Alter / SteuerBasisSatz + Bewohner.Haarlaenge);
+                }
+            }
         }
 
         //Alle Staemme anzeigen
@@ -532,7 +568,7 @@ namespace Dorfverwaltung
                 Console.Write("Bitte geben Sie den Steuerbasissatz als Integer [0..999] an:");
                 EditSteuerBasisSatz();
             }
-            
+
         }
 
         static void Init()
