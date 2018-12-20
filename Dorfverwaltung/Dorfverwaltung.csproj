@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elb.cs" />
     <Compile Include="Gegenstand.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Lebewesen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stamm.cs" />
