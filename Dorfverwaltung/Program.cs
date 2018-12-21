@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-//Zeile 126 : SteuerAusgabe ala
-/*
- * Im Menü möchte Sie dann die Optionen haben, für die Gesamtsteuer, Steuer pro Einwohner, Steuer pro Häuptling und die Optionen zur Veränderung des Basissteuersatz.
- * 
- */
-
-
 namespace Dorfverwaltung
 {
     class Program : IManagement
@@ -122,23 +115,36 @@ namespace Dorfverwaltung
             {
                 gesamtsteuerSatz += Stamm.Tax;
             }
-            Console.WriteLine("Gesamtsteuereinnahmen: " + gesamtsteuerSatz + ".");
+            Console.WriteLine("###      0: Übersichtsanzeige        ###");
+            Console.WriteLine("\n");
+            Console.WriteLine("Gesamtsteuereinnahmen: " + gesamtsteuerSatz + ".00");
             Console.WriteLine("Steuereinnahmen nach Einwohner:");
             int _anzahlBewohner = 0;
+            gesamtsteuerSatz = 0;
             foreach (var Einwohner in AlleBewohner)
             {
                 _anzahlBewohner += 1;
-                if (Einwohner.Machtfaktor > 0)
+                string istStammesfuehrer = "";
+                if (Einwohner.Name.Equals(AlleClans.Find(f => f.Name == Einwohner.Stamm).Stammeshaupt))
                 {
-                    
+                    istStammesfuehrer = "[*]";
                 }
-                gesamtsteuerSatz += Einwohner.Machtfaktor * SteuerBasisSatz;
+                if (Einwohner.Spezies.Equals("Zwerg"))
+                {
+                    int bewohnerSteuersatz = Einwohner.Machtfaktor * SteuerBasisSatz;
+                    gesamtsteuerSatz += bewohnerSteuersatz;
+                    Console.WriteLine(istStammesfuehrer + Einwohner.Name + "(Zwerg): " + bewohnerSteuersatz + ".00");
+                }                
                 else
                 {
                     Elb Bewohner = (Elb)Einwohner;
-                    gesamtsteuerSatz += (int)(Einwohner.Alter / SteuerBasisSatz + Bewohner.Haarlaenge);
+                    int bewohnerSteuersatz = (int)(Einwohner.Alter / SteuerBasisSatz + Bewohner.Haarlaenge);
+                    gesamtsteuerSatz += bewohnerSteuersatz;
+                    Console.WriteLine(istStammesfuehrer + Einwohner.Name + "(Elb): " + bewohnerSteuersatz + ".00");
                 }
             }
+            Console.WriteLine("Durchschnittssteuern: " + gesamtsteuerSatz / _anzahlBewohner + "(" + gesamtsteuerSatz + "/" + _anzahlBewohner + ")");
+            ResetProgram();
         }
 
         //Alle Staemme anzeigen
