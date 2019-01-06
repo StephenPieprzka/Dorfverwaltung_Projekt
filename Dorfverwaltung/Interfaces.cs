@@ -1,6 +1,13 @@
 //Ich musste diese using Verweise hinzufügen, ansonsten hätte ich die Aufrufe für string und List ändern müssen.
 using System;
 using System.Collections.Generic;
+/*
+ *################################################################
+ * 
+ *  Diese Datei enthält die Interfaces IInhabitant, IDuke und IManagement.
+ *  
+ *################################################################
+ */
 /// <summary>
 /// Contains the nessary informations and methods about one Inhabitant for the management
 /// </summary>

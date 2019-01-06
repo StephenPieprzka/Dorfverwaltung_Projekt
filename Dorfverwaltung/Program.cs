@@ -2,24 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/*
+ *################################################################
+ * 
+ *  Diese Datei enthält das eigentliche Programm.
+ *  Die Ausführung springt zwischen mehreren Methoden hin und her,
+ *  um dadurch das Programm aufzugliedern. 
+ *  
+ *################################################################
+ */
 namespace Dorfverwaltung
 {
+    //Das Programm implementiert IManagement.
     class Program : IManagement
     {
+        //Integer TotalTax, zum Externen auslesen.
         public int TotalTax()
         {
+            //Integer auf Wert 0
             int alleSteuern = 0;
+            //Für jeden Stamm im System addieren wir nun dessen Machtfaktor.
             foreach (var Stamm in AlleClans)
             {
                 alleSteuern += Stamm.Tax;
             }
+            //und geben den Gesamtsteuersatz zurück.
             return alleSteuern;
         }
+        //Angabe des Basissteuersatzes
         public float BaseTax { get; set; }
+        //Liste aller Lebewesen im System - externe Ausgabe
         public List<Lebewesen> AllInhabitants()
         {
             return AlleBewohner;
         }
+
+        //Liste aller Stammesführer im System - externe Ausgabe
         public List<Lebewesen> AllDukes()
         {
             List<Lebewesen> allDukes = new List<Lebewesen>();
@@ -29,7 +47,7 @@ namespace Dorfverwaltung
         }
 
         public static int SteuerBasisSatz = 2;
-        //Initialisieren der Bewohnere und Clans
+        //Initialisieren der Bewohner und Clans
         static List<Lebewesen> AlleBewohner = new List<Lebewesen>();
         static Stamm Altobarden = new Stamm("Altobarden", "Zwerg", 1247, "Gimli", 25, new List<Lebewesen>() { });
         static Stamm Elbkbnechte = new Stamm("Elbknechte", "Zwerg", 1023, "", 0, new List<Lebewesen>() { });
@@ -37,18 +55,18 @@ namespace Dorfverwaltung
         static Stamm Montzieu = new Stamm("Montzieu", "Elb", 0, "Malon", 104, new List<Lebewesen>() { });
         static List<Stamm> AlleClans = new List<Stamm>();
 
-
+        //Zwerge
         static Zwerg Gimli = new Zwerg("Gimli", 140, "Altobarden", 0);
         static Zwerg Zwingli = new Zwerg("Zwingli", 70, "Altobarden", 0);
         static Zwerg Gumli = new Zwerg("Gumli", 163, "Elbknechte", 0);
-
+        //Elben
         static Elb Elidyr = new Elb("Elidyr", 318, "Murkpeak", 0, true, 21.0f);
         static Elb Iefyr = new Elb("Iefyr", 214, "Murkpeak", 0, false, 84.0f);
         static Elb Vulas = new Elb("Vulas", 96, "Murkpeak", 0, false, 23.0f);
         static Elb Malon = new Elb("Malon", 592, "Montzieu", 0, false, 145.0f);
 
 
-        //Bewohner fühlen sich ohne Waffen immer "nackt". Initialisieren wir also Waffen, damit die Bewohner diese nutzen können.
+        //Zwerge fühlen sich ohne Waffen immer "nackt". Initialisieren wir also Waffen, damit die Bewohner diese nutzen können.
         static Gegenstand Axt01 = new Gegenstand("Axt", 12);
         static Gegenstand Schwert = new Gegenstand("Schwert", 15);
         static Gegenstand Axt02 = new Gegenstand("Axt", 17);
@@ -58,14 +76,18 @@ namespace Dorfverwaltung
         //Bool, mit dem wir das Programm beenden können, falls gewünscht.
         static bool running = true;
 
+        //Methode Main - hier fängt die Programmausführung an.
         static void Main(string[] args)
         {
+            //Initialisierung des Programmes. Fügt Bewohner in Stämme hinzu und vergibt Gegenstände.
             Init();
             //Beginn der Benutzerinteraktion
             Console.WriteLine("#    Willkommen zur Königreichverwaltung.    #");
+            //Startet Loop, der durch setzen von "running = false" unterbrochen werden kann.
             RunProgramm();
         }
 
+        // Methode die im Loop läuft und die anderen Methoden aufruft.
         static void RunProgramm()
         {
             int steuersatz;
@@ -102,12 +124,14 @@ namespace Dorfverwaltung
             }
             catch (Exception)
             {
+                //Bei einer ungültigen Eingabe den Nutzer die Eingabe wiederholen lassen.
                 Console.WriteLine("Ungültige Eingabe - Bitte versuchen Sie es erneut!");
                 RunProgramm();
             }
 
 
         }
+        //Menüeintrag für die neue Königin - ebenfalls eine Methode.
         static void ShowOverView()
         {
             int gesamtsteuerSatz = 0;
@@ -311,7 +335,7 @@ namespace Dorfverwaltung
                     Console.Write("Elben haben nur ihre Haare als Waffe.");
                 }
                 Console.Write("\n");
-                Console.WriteLine("");
+                Console.WriteLine("#----#");
             }
             ResetProgram();
 
@@ -336,7 +360,7 @@ namespace Dorfverwaltung
                         Console.Write("" + item.Name + "(" + item.MagieWert + "), ");
                     }
                 }
-                else if (bewohner.Spezies.Equals("Zwerg"))
+                else if (bewohner.Spezies.Equals("Elb"))
                 {
                     Elb elb = (Elb)bewohner;
                     Console.Write("Haupthaar (" + elb.Haarlaenge + ")");
@@ -364,8 +388,17 @@ namespace Dorfverwaltung
             }
             if (selection.Equals("Add"))
             {
-                bewohnerToEdit = new Zwerg("", 0, "", 0);
-                AlleBewohner.Add(bewohnerToEdit);
+                Console.WriteLine("Möchten Sie einen (1)Zwerg oder einen (2)Elb hinzufügen?");
+                if (Console.ReadLine().Equals("2"))
+                {
+                    bewohnerToEdit = new Elb("", 0, "", 0, false, 0);
+                    AlleBewohner.Add(bewohnerToEdit);
+                }
+                else
+                {
+                    bewohnerToEdit = new Zwerg("", 0, "", 0);
+                    AlleBewohner.Add(bewohnerToEdit);
+                }
             }
             else
                 bewohnerToEdit = AlleBewohner[currentBewohner];
