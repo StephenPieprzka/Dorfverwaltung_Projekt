@@ -117,6 +117,7 @@ namespace Dorfverwaltung
             }
             Console.WriteLine("###      0: Übersichtsanzeige        ###");
             Console.WriteLine("\n");
+            Console.WriteLine("[*]  -  Kennzeichnet einen Stammesführer\n");
             Console.WriteLine("Gesamtsteuereinnahmen: " + gesamtsteuerSatz + ".00");
             Console.WriteLine("Steuereinnahmen nach Einwohner:");
             int _anzahlBewohner = 0;
